@@ -22,7 +22,6 @@ namespace Playground.Controllers
         [Authorize]
         public IActionResult Privacy()
         {
-            
             return View();
         }
 

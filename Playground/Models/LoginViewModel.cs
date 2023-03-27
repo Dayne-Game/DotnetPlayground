@@ -10,7 +10,6 @@ namespace Playground.Models
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "The password failed")]
         public string Password { get; set; }
     }
 }

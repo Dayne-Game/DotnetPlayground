@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Playground.DAL;
 using Playground.Models;
 using Playground.Services;
@@ -21,6 +22,10 @@ namespace Playground.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            // If User is Authenticated Redirect to Home Page
+            if(User.Identity != null && User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 
@@ -45,6 +50,10 @@ namespace Playground.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            // If user is Authenticated Redirect to Home Page
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 

@@ -46,7 +46,7 @@ namespace Playground.Services
                 if(User == null)
                     return false;
 
-                var Result = await _signInManager.PasswordSignInAsync(User, password, isPersistent: true, lockoutOnFailure: false);
+                var Result = await _signInManager.PasswordSignInAsync(User, password, isPersistent: false, lockoutOnFailure: false);
 
                 return Result.Succeeded;
             }
