@@ -1,23 +1,20 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
+﻿using Microsoft.AspNetCore.Identity;
+using Playground.DAL;
 
 namespace Playground.Services
 {
     public class UserService
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHttpContextAccessor httpContextAccessor)
+        public UserService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        public async Task<bool> Register(string username, string email, string password)
+        public async Task<bool> Register(string username, string firstname, string lastname, string email, string password)
         {
             try
             {
@@ -28,9 +25,11 @@ namespace Playground.Services
                 if (exisitngEmail != null)
                     return false;
 
-                var User = new IdentityUser
+                var User = new ApplicationUser
                 {
                     UserName = username,
+                    Firstname = firstname,
+                    Lastname = lastname,
                     Email = email,
                     EmailConfirmed = true
                 };

@@ -64,7 +64,7 @@ namespace Playground.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var Result = await _userService.Register(model.Username, model.Email, model.Password);
+            var Result = await _userService.Register(model.Username, model.Firstname, model.Lastname, model.Email, model.Password);
 
             if(!Result)
             {
