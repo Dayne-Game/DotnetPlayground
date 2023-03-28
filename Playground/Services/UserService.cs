@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Playground.Services
 {
@@ -19,6 +21,13 @@ namespace Playground.Services
         {
             try
             {
+                // Check if email and Username is already taken
+                var exisitngUsername = await _userManager.FindByNameAsync(username);
+                var exisitngEmail = await _userManager.FindByEmailAsync(email);
+
+                if (exisitngEmail != null)
+                    return false;
+
                 var User = new IdentityUser
                 {
                     UserName = username,
@@ -55,6 +64,11 @@ namespace Playground.Services
                 // TO DO: Add Logging :-)
                 return false;
             }
+        }
+
+        public async Task Logout()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

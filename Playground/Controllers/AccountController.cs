@@ -11,8 +11,8 @@ namespace Playground.Controllers
     {
 
         private readonly UserService _userService;
-        private readonly string _failedRegister = "Failed to Register";
-        private readonly string _failedLogin = "Failed to Login";
+        private readonly string _failedRegister = "Invalid Register Attempt";
+        private readonly string _failedLogin = "Invalid Login Attempt";
 
         public AccountController(UserService userService)
         {
@@ -58,7 +58,7 @@ namespace Playground.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Register(RegisterViewModel model) 
         {
             if (!ModelState.IsValid)
@@ -72,6 +72,15 @@ namespace Playground.Controllers
                 return View(model);
             }
 
+            return RedirectToAction("Login", "Account");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _userService.Logout();
             return RedirectToAction("Index", "Home");
         }
     }
